@@ -1,0 +1,1 @@
+export { fetchAppMeta } from './appMeta';

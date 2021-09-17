@@ -1,8 +1,18 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { fetchAppMeta } from '../../store';
+
 import logo from './logo.svg';
 
 import './App.scss';
 
-function App() {
+function App({ reduxStore, reduxAction }) {
+  React.useEffect(() => {
+    reduxAction.fetchAppMeta();
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,9 +28,26 @@ function App() {
         >
           Learn React
         </a>
+
+        <p>App version: {reduxStore.appMeta.version || '...'}</p>
       </header>
     </div>
   );
 }
 
-export default App;
+const mapStateToProps = (store) => ({
+  reduxStore: {
+    appMeta: store.appMeta,
+  },
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  reduxAction: bindActionCreators(
+    {
+      fetchAppMeta,
+    },
+    dispatch
+  ),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
