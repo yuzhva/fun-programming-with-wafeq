@@ -1,20 +1,28 @@
 import { Switch, Route } from 'react-router-dom';
 
-import { App } from './pages';
+import { AboutPage, RootPage } from './pages';
+import { LayoutWrapper } from './containers';
 
-const routes = [
-  {
-    path: '/',
-    component: App
+export const routeByPageKey = {
+  aboutPage: {
+    path: '/about',
+    component: AboutPage,
   },
-]
+};
 
-const routesChildren = (
+const routes = (
   <Switch>
-    {routes.map((route) => (
-      <Route key={`routePath${route.path}`} {...route} />
-    ))}
+    <LayoutWrapper>
+      {Object.keys(routeByPageKey).map((routePageKey) => (
+        <Route
+          key={`routePageKey${routePageKey}`}
+          path={routeByPageKey[routePageKey].path}
+          component={routeByPageKey[routePageKey].component}
+        />
+      ))}
+      <Route exact path="/" component={RootPage} />
+    </LayoutWrapper>
   </Switch>
 );
 
-export default routesChildren;
+export default routes;

@@ -6,22 +6,22 @@ import { fetchAppMeta } from '../../store';
 
 import logo from './logo.svg';
 
-import './App.scss';
+import './about.scss';
 
-function App({ reduxStore, reduxAction }) {
+const About = ({ reduxStore, reduxAction }) => {
   React.useEffect(() => {
     reduxAction.fetchAppMeta();
   }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+    <div className="about-page">
+      <header className="about-header">
+        <img src={logo} className="about-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Edit <code>src/pages/about/About.js</code> and save to reload.
         </p>
         <a
-          className="App-link"
+          className="about-link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
@@ -29,11 +29,13 @@ function App({ reduxStore, reduxAction }) {
           Learn React
         </a>
 
+        <br />
+
         <p>App version: {reduxStore.appMeta.version || '...'}</p>
       </header>
     </div>
   );
-}
+};
 
 const mapStateToProps = (store) => ({
   reduxStore: {
@@ -50,4 +52,4 @@ const mapDispatchToProps = (dispatch) => ({
   ),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(About);
