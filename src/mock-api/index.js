@@ -1,4 +1,4 @@
-import { APP_META } from './mock-constant';
+import { APP_META, INVOICES, BILLS, EXPENSES } from './mock-constant';
 
 const initMockPromise = (promisedResponse) => () =>
   new Promise((res) => {
@@ -35,3 +35,12 @@ const initPatchPromise = (initialState) => (nextObj) =>
 
 // fetch
 export const fetchAppMetaMock = initMockPromise(APP_META);
+
+export const fetchInvoicesMock = initMockPromise(INVOICES);
+export const patchInvoicesMock = initPatchPromise(INVOICES);
+
+export const fetchBillsMock = initMockPromise(BILLS);
+export const patchBillsMock = initPatchPromise(BILLS);
+
+export const fetchExpensesMock = initMockPromise(EXPENSES);
+export const patchExpensesMock = initPatchPromise(EXPENSES);

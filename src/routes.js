@@ -1,9 +1,17 @@
 import { Switch, Route } from 'react-router-dom';
 
-import { AboutPage, RootPage } from './pages';
+import { AboutPage, RootPage, BillsPage, InvoicesPage } from './pages';
 import { LayoutWrapper } from './containers';
 
 export const routeByPageKey = {
+  billsPage: {
+    path: '/bills',
+    component: BillsPage,
+  },
+  invoicesPage: {
+    path: '/invoices',
+    component: InvoicesPage,
+  },
   aboutPage: {
     path: '/about',
     component: AboutPage,

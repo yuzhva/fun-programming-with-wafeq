@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# Fun programming with wafeq
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+👋 Welcome to the JS programming challenge
 
-## Available Scripts
+# Getting started
 
-In the project directory, you can run:
+**1.** Install dependencies:
 
-### `yarn start`
+```bash
+yarn install # yarn
+npm install # npm
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**2.** Start the server:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+```bash
+yarn start # yarn
+npm run start # npm
+```
 
-### `yarn test`
+# NOTE: while writing the code, please
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- use best practices
+- best practices in everything: codding, revision control, quality - choose best approaches that fit in the current situation
+- the result, should be the code, which is ready for production deployment
+- relax and enjoy the codding 🙃
 
-### `yarn build`
+# TODO:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- [ ] Validate Form field is required
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Open the invoices page, click on the row with the Empty description. When a form with an empty description is saved - then back-end returns an error. Validate the `note` field at the front-end. Display _This field is required_ error before sending it to the API.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- [ ] Bills page should have the same behavior as Invoices one
 
-### `yarn eject`
+The next Bills page features are missing:
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- open modal on row click
+- validate form required field
+- copy table JSON to the clipboard
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- [ ] BUG: Modal notifications should be visible after the modal has been closed
+- [ ] BUG: Table data is not updated on modal close
+- [ ] FEAT: Show notification when text copied to clipboard
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Extra:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- [ ] Create a new Expenses page
 
-## Learn More
+Then Expenses page should have the same behavior as the Invoices one. Use `fetchExpensesMock` and `patchExpensesMock` for API communication. Display the next table columns: Date, Account, Paid through, Currency, Description.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [ ] Style Success Modal
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Write simple success modal, using:
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- `flag checkered` Icon https://react.semantic-ui.com/elements/icon/
+- `color="green"` Button https://react.semantic-ui.com/elements/button/#variations-colored
+- Content should be middle aligned
+- Icon places in the center
+- button aligned to the right of the modal.
