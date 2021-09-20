@@ -10,18 +10,13 @@ import {
 
 import { routeByPageKey } from '../../routes';
 
+import SIDE_MENU_NAV from './side-menu-nav';
+
 import 'semantic-ui-css/semantic.min.css';
 
 import './layout-wrapper.css';
 
 const TITLE = 'fun programming';
-
-const SIDE_MENU_NAV = [
-  {
-    title: 'About',
-    pageKey: 'aboutPage',
-  },
-];
 
 const LayoutWrapper = ({ children }) => {
   // const [dropdownMenuStyle, setDropdownMenuStyle] = React.useState({

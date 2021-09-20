@@ -30,6 +30,15 @@ const RootPage = () => (
           via GIPHY
         </a>
       </p>
+      <Header
+        as="h1"
+        content="🚀 to the 🌝 with ❤️"
+        style={{
+          fontSize: '2.5em',
+          fontWeight: 'normal',
+          marginTop: '0.5em',
+        }}
+      />
     </Container>
   </LayoutWrapper.Content>
 );
