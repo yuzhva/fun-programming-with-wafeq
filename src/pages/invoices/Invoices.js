@@ -20,11 +20,15 @@ import { LayoutWrapper } from '../../containers';
 import { fetchInvoicesMock, patchInvoicesMock } from '../../mock-api';
 
 import { INVOICES__TABLE_COLUMNS } from '../../table-configuration';
+import { copyToClipboard } from '../../utils/utils';
 
 const INVOICES_FORM_ID = 'invoices';
 
+const INVOICE_NOTE = 'note';
+
 const FormInvoices = ({ invoice, onClose, setIsModalPending }) => {
   const [formState, setFormState] = React.useState(invoice);
+  const [errors, setErrors] = React.useState({});
 
   const [notifications, setNotifications] = React.useState([]);
   const handleNotificationAdd = React.useCallback(
@@ -42,15 +46,27 @@ const FormInvoices = ({ invoice, onClose, setIsModalPending }) => {
 
   const handleFormInputChange = React.useCallback(
     (e) => {
+      const {name, value} = e.currentTarget;
+
+      setErrors({});
+
       setFormState({
         ...formState,
-        [e.currentTarget.name]: e.currentTarget.value,
+        [name]: value,
       });
     },
     [formState]
   );
 
   const handleFormSubmit = React.useCallback(() => {
+    if (formState[INVOICE_NOTE] === '') {
+      setErrors({
+        ...errors,
+        [INVOICE_NOTE]: true
+      });
+      return;
+    }
+
     setIsModalPending(true);
     handleNotificationAdd({ message: 'Saving', color: 'yellow' });
 
@@ -73,7 +89,7 @@ const FormInvoices = ({ invoice, onClose, setIsModalPending }) => {
           color: 'red',
         });
       });
-  }, [formState, onClose, setIsModalPending, handleNotificationAdd]);
+  }, [formState, onClose, setIsModalPending, handleNotificationAdd, setErrors, errors]);
 
   return (
     <>
@@ -125,10 +141,10 @@ const FormInvoices = ({ invoice, onClose, setIsModalPending }) => {
         </FormSUI.Group>
 
         <FormSUI.TextArea
-          name="note"
+          name={INVOICE_NOTE}
           label="Description"
           placeholder="Information about file..."
-          // error="This field is required"
+          error={errors[INVOICE_NOTE] && "This field is required"}
           value={formState.note}
           onChange={handleFormInputChange}
         />
@@ -195,9 +211,7 @@ const InvoicesPage = () => {
   );
 
   const handleBtnCopyToClipboardClick = React.useCallback(() => {
-    window.navigator.clipboard.writeText(JSON.stringify(pageData)).then(() => {
-      // TODO:
-    });
+    copyToClipboard(pageData);
   }, [pageData]);
 
   React.useEffect(() => {

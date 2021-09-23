@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Grid,
   Header,
@@ -20,11 +20,15 @@ import { LayoutWrapper } from '../../containers';
 import { fetchBillsMock, patchBillsMock } from '../../mock-api';
 
 import { BILLS__TABLE_COLUMNS } from '../../table-configuration';
+import { copyToClipboard } from '../../utils/utils';
 
 const BILLS_FORM_ID = 'bills';
 
+const INVOICE_NOTE = 'note';
+
 const FormBills = ({ bill, onClose, setIsModalPending }) => {
   const [formState, setFormState] = React.useState(bill);
+  const [errors, setErrors] = React.useState({});
 
   const [notifications, setNotifications] = React.useState([]);
   const handleNotificationAdd = React.useCallback(
@@ -42,15 +46,27 @@ const FormBills = ({ bill, onClose, setIsModalPending }) => {
 
   const handleFormInputChange = React.useCallback(
     (e) => {
+      const {name, value} = e.currentTarget;
+      
+      setErrors({});
+      
       setFormState({
         ...formState,
-        [e.currentTarget.name]: e.currentTarget.value,
+        [name]: value,
       });
     },
     [formState]
   );
 
   const handleFormSubmit = React.useCallback(() => {
+    if (formState[INVOICE_NOTE] === '') {
+      setErrors({
+        ...errors,
+        [INVOICE_NOTE]: true
+      });
+      return;
+    }
+
     setIsModalPending(true);
     handleNotificationAdd({ message: 'Saving', color: 'yellow' });
 
@@ -73,7 +89,7 @@ const FormBills = ({ bill, onClose, setIsModalPending }) => {
           color: 'red',
         });
       });
-  }, [formState, onClose, setIsModalPending, handleNotificationAdd]);
+  }, [formState, onClose, setIsModalPending, handleNotificationAdd, errors]);
 
   return (
     <>
@@ -125,10 +141,10 @@ const FormBills = ({ bill, onClose, setIsModalPending }) => {
         </FormSUI.Group>
 
         <FormSUI.TextArea
-          name="note"
+          name={INVOICE_NOTE}
           label="Description"
           placeholder="Information about file..."
-          // error="This field is required"
+          error={errors[INVOICE_NOTE] && "This field is required"}
           value={formState.note}
           onChange={handleFormInputChange}
         />
@@ -179,10 +195,32 @@ const ModalBills = ({ bill, onClose }) => {
 };
 
 const BillsPage = () => {
-  const isPageFetching = null,
-    pageData = [],
-    pageOpenedRow = null,
-    setPageOpenedRow = null;
+  const [pageOpenedRow, setPageOpenedRow] = useState(false);
+
+  const [pageData, setPageData] = useState();
+  const [isPageFetching, setIsPageFetching] = useState(null);
+
+  React.useEffect(() => {
+    fetchBillsMock().then((response) => {
+      setPageData(response);
+      setIsPageFetching(false);
+    });
+  }, []);
+
+  const handleTableRowClick = React.useCallback((row) => {
+    setPageOpenedRow(row);
+  }, []);
+
+  const rowProps = React.useMemo(
+    () => ({
+      onClick: handleTableRowClick,
+    }),
+    [handleTableRowClick]
+  );
+
+  const handleBtnCopyToClipboardClick = React.useCallback(() => {
+    copyToClipboard(pageData);
+  }, [pageData]);
 
   return (
     <>
@@ -195,7 +233,7 @@ const BillsPage = () => {
           </Grid.Row>
 
           {/* Actions */}
-          {/* <Grid.Row>
+          <Grid.Row>
             <Grid.Column textAlign="right">
               <Dropdown
                 text="Copy"
@@ -211,7 +249,7 @@ const BillsPage = () => {
                 </Dropdown.Menu>
               </Dropdown>
             </Grid.Column>
-          </Grid.Row> */}
+          </Grid.Row>
 
           {/* Table */}
           <Grid.Row>
@@ -221,7 +259,7 @@ const BillsPage = () => {
               <Table
                 columns={BILLS__TABLE_COLUMNS}
                 data={pageData}
-                // rowProps={rowProps}
+                rowProps={rowProps}
               />
             )}
           </Grid.Row>
